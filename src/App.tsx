@@ -191,7 +191,7 @@ export default function App() {
         default:
           throw new Error(`Unsupported file format: ${fileExtension}`);
       }
-    } catch (error) {
+    } catch (error:any) {
       throw new Error(`Error parsing ${file.name}: ${error.message}`);
     }
   };
@@ -209,9 +209,9 @@ export default function App() {
           detectedSkills.add(skill);
           matchCount++;
         }
-
-        const variations = category.variations[skill] || [];
-        variations.forEach((variation) => {
+         
+        const variations = category.variations[skill as keyof typeof category.variations]as [];
+        variations.forEach((variation:any) => {
           if (textLower.includes(variation.toLowerCase())) {
             detectedSkills.add(skill);
             matchCount++;
@@ -254,7 +254,7 @@ export default function App() {
         };
 
         setResumes((prev) => [...prev, resume]);
-      } catch (error) {
+      } catch (error:any) {
         newErrors.push({
           fileName: file.name,
           error: error.message,
